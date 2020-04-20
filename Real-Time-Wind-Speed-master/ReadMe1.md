@@ -1,6 +1,8 @@
 
 ## WorkFlow
 
+![](workflow.png)
+
 
 ```python
 from IPython.display import Image
@@ -14,7 +16,7 @@ Image("workflow.png")
 
 
 
-![png](output_2_0.png)
+![png](output_3_0.png)
 
 
 
@@ -30,6 +32,6 @@ Image("demo0.jpg")
 
 
 
-![jpeg](output_5_0.jpeg)
+![jpeg](output_6_0.jpeg)
 
 
