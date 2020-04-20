@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Real Time Wind Speed</title>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="Shortcut Icon" type="image/x-icon" href="images/shellee.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script src="https://unpkg.com/ol-layerswitcher@3.4.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ol-layerswitcher@3.4.0/src/ol-layerswitcher.css" />
+    <script src="./js/map.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="https://kit.fontawesome.com/7a1072a117.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="card" id="left-panel">
+        <div class="card-body">
+            <h5 class="card-title">Real Time Wind Speed</h5>
+            <span class="tag"><i class="fas fa-map-marker-alt mr-1"></i>TAIPEI</span>
+            <p class="card-text">
+                <li>風速是影響空氣污染分布的關鍵因子，此地圖在考量地表粗糙度以及大氣穩定度下，提供使用者查詢即時的行人高度風速。</li>
+            </p>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary normal-btn" onclick="searchBox.create()"><i
+                        class="fas fa-edit mr-1"></i>繪製</button>
+                <button type="button" class="btn btn-secondary normal-btn" onclick="searchBox.remove()"><i
+                        class="fas fa-eraser mr-1"></i>清除</button>
+            </div>
+
+            <button type="button" class="btn btn-primary search-btn" onclick="searchBox.search()"><i
+                    class="fas fa-search mr-1"></i>查詢</button>
+
+
+            <div class="card" style="margin-top:15px; height: 10%;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-7">行人高度風速：</div>
+                        <div id="u2" class="col-5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- map -->
+    <div class="container-fluid">
+        <div class="row">
+            <div id="map" class="map"></div>
+        </div>
+    </div>
+    <!-- <footer id="color-bar">
+        <img src="images/color_system.png" class="img-fluid" alt="Responsive image">
+    </footer> -->
+
+    <div id="color-bar" class="container-fluid bottom-bar">
+        <hr class="dotted-line"></hr>
+        <div class="row text-center">
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+            <div class="legend col-1"></div>
+        </div>
+        <div class="row text-center">
+            <div class="legend-label col-1"><small>0</small></div>
+            <div class="legend-label col-1"><small>0.5</small></div>
+            <div class="legend-label col-1"><small>1</small></div>
+            <div class="legend-label col-1"><small>1.5</small></div>
+            <div class="legend-label col-1"><small>2</small></div>
+            <div class="legend-label col-1"><small>2.5</small></div>
+            <div class="legend-label col-1"><small>3</small></div>
+            <div class="legend-label col-1"><small>3.5</small></div>
+            <div class="legend-label col-1"><small>4</small></div>
+            <div class="legend-label col-1"><small>4.5</small></div>
+        </div>
+        <div class="row">
+            <div class="text-center col-12">Wind speed at pedestrian level (ms<sup>-1</sup>)</div>
+        </div>
+
+    </div>
+    <div class="card" id="search-alert">
+        <div class="card-body text-center">
+            <div>請繪製搜尋範圍</div>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            setMapSize();
+            initMap();
+            initLegend();
+        }
+        window.onresize = function() {
+            setMapSize();
+        };
+
+        function setMapSize() {
+            let window_H = window.innerHeight;
+            let map_H = window_H;
+            let colorBar_H = document.getElementById("color-bar").clientHeight;
+            document.getElementById("map").style.height = map_H - colorBar_H + "px";
+            document.getElementById("left-panel").style.height = (map_H - colorBar_H) - 20 + "px";
+        }
+
+        function initLegend() {
+            let legends = document.getElementsByClassName('legend');
+            let colorList = [
+                'rgba(66, 108, 142, 1)',
+                'rgba(93, 179, 204, 1)',
+                'rgba(59, 169, 26, 1)',
+                'rgba(151, 237, 70, 1)',
+                'rgba(242, 231, 43, 1)',
+                'rgba(246, 199, 100, 1)',
+                'rgba(242, 167, 32, 1)',
+                'rgba(247, 109, 27, 1)',
+                'rgba(247, 58, 64, 1)',
+                'rgba(244, 1, 26, 1)'
+            ]
+            for (let i = 0; i < legends.length; i++) {
+                legends[i].style.backgroundColor = colorList[i]
+            }
+        }
+    </script>
+</body>
+
+</html>
