@@ -41,19 +41,19 @@
 
 ### 7-1. UI (User Interface)
 
-#### ![](./doc/images/demo0.jpg)
+#### ![UI](./doc/images/demo0.jpg)
 
 ### 7-2. Search
 * **Users could draw (click the "繪製" button) the range where they would like to know the information of wind speed.**
 * **The radias of the circle is from 50 meters to 300 meters.**
 
-#### ![](./doc/images/demo1.jpg)
+#### ![Search](./doc/images/demo1.jpg)
 
 ### 7-3. Result
 * **After clicking the button: "查詢", users could find the information of wind speed in this range.**
 * **The color bar on the buttom shows the wind speed.**
 
-#### ![](./doc/images/demo2.jpg)
+#### ![Result](./doc/images/demo2.jpg)
 
 ## 8. Reference
 
