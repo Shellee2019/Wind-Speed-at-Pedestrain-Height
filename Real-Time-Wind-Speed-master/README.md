@@ -1,51 +1,31 @@
-# Real Time Wind Speed
 
-透過WebGIS讓使用者繪製特定的範圍，提供該範圍的行人高度風速資料。
+# Wind Speed at Pedestrian Height in Real Time
 
-## Get Started
+## 1. Introduction
+* **The visualization for wind speed at pedestrian height with high spatial resolution 10 meter offers users to look up the real time wind speed on the street scale. Using polygons wind data which are from interpolating points wind data could provide people the wind information of areas with no observations. Based on the real time wind speed, everyone could estimate the concentrations of air pollutants with the contributions of atmospheric diffusion conditions.**
 
-1. 下載專案(可以手動點選download下載zip檔案)
+## 2. Diagram Frame
+#### ![Diagram Frame](./doc/images/workflow.png)
+#### create with draw.io
 
-    `git clone https://github.com/YuChunTsao/Real-Time-Wind-Speed.git`
+## 3. Getting Started
+#### Step 3-1. download (clone) the project
+`git clone https://github.com/Shellee2019/Wind-Speed-at-Pedestrain-Height.git`
+#### Step 3-2. change the current working directory to 'app' folder
+`cd Real-Time-Wind-Speed/app/`
+#### Step 3-3. install all used package
+`npm install`
 
-2. 切換至app目錄
+## 4. Development Tool
+* **Web Server:**  Nodejs Express
+* **Database:**  MariaDB
+* **Map Frame:**  [OpenLayers v4.6.5](https://github.com/openlayers/openlayers/releases/tag/v4.6.5)
 
-    `cd Real-Time-Wind-Speed/app/`
+## 5. Analysis
+* **spatial analysis:** Turf.js Modules
+* **scheduled jobs:** [node-schedule](https://www.npmjs.com/package/node-schedule)
 
-3. 將依賴套件安裝
-
-    `npm install`
-
-## 系統架構圖
-
-![系統架構圖](./doc/images/flowchart.png)
-
-create with draw.io
-
-## 伺服器
-
-Nodejs Express
-
-## 資料庫
-
-MariaDB
-
-* [判斷測站不存在才進行insert into](https://www.techonthenet.com/mariadb/exists.php)
-
-## 前端地圖框架
-
-Leaflet
-
-## 空間分析
-
-Turf.js
-
-## 排程
-
-* [node-schedule] (https://www.npmjs.com/package/node-schedule)
-
-## 資料來源
-
+## 6. Data Source
 * [自動氣象站-氣象觀測資料](https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001)
 * [局屬氣象站-現在天氣觀測報告](https://opendata.cwb.gov.tw/dataset/observation/O-A0003-001)
 * 環保署
@@ -57,29 +37,25 @@ Turf.js
     * [空氣品質監測站位置圖](https://opendata.epa.gov.tw/Data/GeoDetails/ATM00477/)
 * [校園測站](http://weather.tp.edu.tw/Ajax/jsonp/LastAllEffect.ashx?fbclid=IwAR0pCF_Rb6LUE4KhLU6mQUXQGOS_dX-le9sAJ0xZo6e7EG-YiG7sSLBY2Ik)
 
----
+## 7. Web GIS Result
 
-## 專案建置過程文件
+### 7-1. UI (User Interface)
 
-### 已完成
+#### ![UI](./doc/images/demo0.png)
 
-* [nodejs安裝及測試](./doc/Nodejs.md)
-* [express安裝及測試](./doc/Express.md)
+### 7-2. Search
+* **Users could draw (click the "繪製" button) the range where they would like to know the information of wind speed.**
+* **The radias of the circle is from 50 meters to 300 meters.**
 
-### 未完成
+#### ![Search](./doc/images/demo1.png)
 
-* [express api設計(controller)](https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Express_Nodejs/routes)
-* [nodejs請求api (node-fetch)](https://www.npmjs.com/package/node-fetch)
-* [turf.js空間資料處理](https://turfjs.org/)
-* leaflet及turf.js座標系統的轉換及設定
-  * [Proj4Leaflet](https://kartena.github.io/Proj4Leaflet/)
-  * [turf.js toMercator](https://turfjs.org/docs/#toMercator)
-* [leaflet前端地圖頁面展示](https://leafletjs.com/)
-* [leaflet使用者繪製功能](http://leaflet.github.io/Leaflet.draw/docs/examples/full.html)
-* [mariaDB連線及資料表設計](https://mariadb.com/kb/en/library/getting-started-with-the-nodejs-connector/)
-* [mariaDB匯入geojson及空間資料的存取](https://mariadb.com/kb/en/library/geojson/)
+### 7-3. Result
+* **After clicking the button: "查詢", users could find the information of wind speed in this range.**
+* **The color bar on the buttom shows the wind speed.**
 
-## Reference
+#### ![Result](./doc/images/demo2.png)
+
+## 8. Reference
 
 * [Nodejs](https://nodejs.org/en/)
 * [Express/Node introduction](https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Express_Nodejs/Introduction)
